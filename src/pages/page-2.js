@@ -11,8 +11,8 @@ const SecondPage = () => {
         <title>Page Two</title>
       </Helmet>
       <Container type="content" className="text-center">
-        <h1>Page Two</h1>
-        <p>Welcome to page 2</p>
+        <h1>Under Construction</h1>
+        <p>Coming soon...</p>
       </Container>
     </Layout>
   );
