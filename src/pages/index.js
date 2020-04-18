@@ -18,7 +18,7 @@ const DEFAULT_ZOOM = 2;
 
 
 const IndexPage = () => {
-  
+
 
   /**
    * mapEffect
@@ -27,21 +27,21 @@ const IndexPage = () => {
    */
 
   async function mapEffect({ leafletElement: map } = {}) {
-    if(!map) return;
+    if (!map) return;
 
     let response;
 
     try {
-      response = await axios.get('https://corona.lmao.ninja/countries');
+      response = await axios.get('https://corona.lmao.ninja/v2/countries');
 
-    }catch (e) {
+    } catch (e) {
 
       console.log('E', e);
       return;
     }
     //console.log('response', response);
 
-    const {data} = response;
+    const { data } = response;
     const hasData = Array.isArray(data) && data.length > 0;
 
     if (!hasData) return;
@@ -54,11 +54,11 @@ const IndexPage = () => {
         return {
           type: 'Feature',
           properties: {
-           ...country,
+            ...country,
           },
           geometry: {
             type: 'Point',
-            coordinates: [ lng, lat ]
+            coordinates: [lng, lat]
           }
         }
       })
@@ -69,7 +69,7 @@ const IndexPage = () => {
         const { properties = {} } = feature;
         let updatedFormatted;
         let casesString;
-    
+
         const {
           country,
           updated,
@@ -77,17 +77,17 @@ const IndexPage = () => {
           deaths,
           recovered
         } = properties
-    
+
         casesString = `${cases}`;
-    
-        if ( cases > 1000 ) {
+
+        if (cases > 1000) {
           casesString = `${casesString.slice(0, -3)}k+`
         }
-    
-        if ( updated ) {
+
+        if (updated) {
           updatedFormatted = new Date(updated).toLocaleString();
         }
-    
+
         const html = `
           <span class="icon-marker">
             <span class="icon-marker-tooltip">
@@ -99,11 +99,11 @@ const IndexPage = () => {
                 <li><strong>Last Update:</strong> ${updatedFormatted}</li>
               </ul>
             </span>
-            ${ casesString }
+            ${ casesString}
           </span>
         `;
-    
-        return L.marker( latlng, {
+
+        return L.marker(latlng, {
           icon: L.divIcon({
             className: 'icon',
             html
@@ -130,10 +130,10 @@ const IndexPage = () => {
       </Helmet>
 
       <Map {...mapSettings}>
-        
+
       </Map>
 
- {/*
+      {/*
       <Container type="content" className="text-center home-start">
         <h2>Social Distancing</h2>
         <p>Run the following in your terminal!</p>
